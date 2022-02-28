@@ -1,23 +1,22 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
+from backend.views import UserViewSet, GroupViewSet, error_400, error_403, error_404, error_500, home
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+handler404 = 'backend.views.error_404'
+handler400 = 'backend.views.error_400'
+handler500 = 'backend.views.error_500'
+handler403 = 'backend.views.error_403'
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'groups', GroupViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'', home, name='document'),
+    path('', include('document.urls')),
 ]
