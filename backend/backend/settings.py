@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-3!$0+c8!#zj=c35e1a+u7v@8wb&gcf)f0ny7bg0obfdzw%z6-x'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -17,8 +17,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'graphene_django',
     'backend',
-    'document'
+    'document',
+    'products',
+    'employee'
 ]
 
 MIDDLEWARE = [
@@ -96,4 +99,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
+}
+
+GRAPHENE = {
+    "SCHEMA": "products.schema.schema"
 }
